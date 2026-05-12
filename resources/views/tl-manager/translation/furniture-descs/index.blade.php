@@ -1,20 +1,21 @@
 @extends('tl-manager.translation.layouts.app')
 
-@section('title', 'Quest List')
+@section('title', 'Furniture Description List')
 
 @section('content')
 
-@include('tl-manager.translation.quests.partials.sidebar')
+@include('tl-manager.translation.furniture-descs.partials.sidebar')
+
 <link rel="stylesheet" href="{{ asset('css/translation/style-index.css') }}">
 <div>
     <div class="flex items-end justify-between gap-4 mb-7 flex-wrap">
         <div>
-            <h1 class="text-slate-100 tracking-tight leading-tight">Quest List</h1>
-            <p class="text-xs text-slate-500 mt-0.5">Manage and monitor ongoing translation quests.</p>
+            <h1 class="text-slate-100 tracking-tight leading-tight">Furniture Description List</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Manage and monitor ongoing translation furniture descriptions.</p>
         </div>
 
         <div class="flex gap-2 items-center">
-            <a href="{{ route('quests.export') }}"
+            <a href="{{ route('furniture-descs.export') }}"
                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[0.55rem] text-xs font-semibold cursor-pointer no-underline transition-all duration-150 border border-[#252a38] bg-[#181c27] text-slate-400 hover:bg-[#1e2436] hover:text-slate-200 whitespace-nowrap font-[Plus_Jakarta_Sans]">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -24,13 +25,13 @@
                 Export
             </a>
 
-            <a href="{{ route('quests.create') }}"
+            <a href="{{ route('furniture-descs.create') }}"
                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[0.55rem] text-xs font-semibold cursor-pointer no-underline transition-all duration-150 border border-blue-700 bg-blue-600 text-white hover:bg-blue-700 hover:shadow-[0_0_0_3px_rgba(59,130,246,0.2)] whitespace-nowrap font-[Plus_Jakarta_Sans]">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"/>
                     <line x1="5" y1="12" x2="19" y2="12"/>
                 </svg>
-                New Quest
+                New Furniture Description
             </a>
         </div>
     </div>
@@ -53,27 +54,27 @@
             </thead>
 
             <tbody>
-                @forelse($quests as $quest)
+                @forelse($furnitureDescs as $furnitureDesc)
                     <tr class="border-b border-[#1a1e2b] last:border-b-0 hover:bg-[#181c27] transition-colors duration-100">
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            <span class="text-slate-400 text-[0.78rem] font-medium">#{{ $quest->quest_id }}</span>
+                            <span class="text-slate-400 text-[0.78rem] font-medium">#{{ $furnitureDesc->furniture_desc_id }}</span>
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $quest->quest_code }}</span>
+                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $furnitureDesc->code }}</span>
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">
-                            <span class="text-[0.9rem] text-slate-200 max-w-[220px] block">{{ $quest->title_jp }}</span>
+                            <span class="text-[0.9rem] text-slate-200 max-w-[220px] block">{{ $furnitureDesc->title_jp }}</span>
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">
-                            <span class="text-slate-400 max-w-[220px] block">{{ $quest->title_en }}</span>
+                            <span class="text-slate-400 max-w-[220px] block">{{ $furnitureDesc->title_en }}</span>
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            @if($quest->description_en)
+                            @if($furnitureDesc->description_en)
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[0.35rem] text-[0.65rem] font-bold tracking-[0.1em] uppercase whitespace-nowrap border bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
                                     <span class="w-[5px] h-[5px] rounded-full bg-current"></span>
                                     Translated
@@ -89,8 +90,8 @@
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">
                             <div class="flex items-center gap-1.5 justify-end">
 
-                                <a href="{{ route('quests.edit', $quest) }}"
-                                   title="Edit quest"
+                                <a href="{{ route('furniture-descs.edit', $furnitureDesc) }}"
+                                   title="Edit furniture description"
                                    class="w-[30px] h-[30px] flex items-center justify-center rounded-[0.4rem] border border-[#252a38] bg-transparent text-slate-500 cursor-pointer no-underline transition-all duration-150 hover:bg-[#1e2436] hover:text-slate-200 hover:border-slate-500">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -100,14 +101,14 @@
 
                                 <form
                                     method="POST"
-                                    action="{{ route('quests.destroy', $quest) }}"
-                                    onsubmit="return confirm('Delete quest #{{ $quest->quest_id }}?');"
+                                    action="{{ route('furniture-descs.destroy', $furnitureDesc) }}"
+                                    onsubmit="return confirm('Delete furniture description #{{ $furnitureDesc->id }}?');"
                                     class="inline"
                                 >
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            title="Delete quest"
+                                            title="Delete furniture description"
                                             class="w-[30px] h-[30px] flex items-center justify-center rounded-[0.4rem] border border-[#252a38] bg-transparent text-slate-500 cursor-pointer transition-all duration-150 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/30">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="3 6 5 6 21 6"/>
@@ -129,8 +130,8 @@
                                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-4 opacity-30">
                                     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                                 </svg>
-                                <h3 class="font-[Plus_Jakarta_Sans] text-[1.1rem] font-bold text-slate-500 mb-1.5">No quests found</h3>
-                                <p class="text-[0.82rem]">Try another keyword or <a href="{{ route('quests.create') }}" class="text-blue-500">create a new quest</a>.</p>
+                                <h3 class="font-[Plus_Jakarta_Sans] text-[1.1rem] font-bold text-slate-500 mb-1.5">No furniture descriptions found</h3>
+                                <p class="text-[0.82rem]">Try another keyword or <a href="{{ route('furniture-descs.create') }}" class="text-blue-500">create a new furniture description</a>.</p>
                             </div>
                         </td>
                     </tr>
@@ -140,11 +141,11 @@
 
         <div class="flex items-center justify-between px-[1.1rem] py-[0.85rem] border-t border-[#1e2436] bg-[#0f1117] flex-wrap gap-3">
             <span class="text-[0.75rem] text-slate-500">
-                Showing {{ $quests->firstItem() }}–{{ $quests->lastItem() }} of
-                <strong class="text-slate-400">{{ number_format($quests->total()) }}</strong> quests
+                Showing {{ $furnitureDescs->firstItem() }}–{{ $furnitureDescs->lastItem() }} of
+                <strong class="text-slate-400">{{ number_format($furnitureDescs->total()) }}</strong> furniture descriptions
             </span>
 
-            {{ $quests->links() }}
+            {{ $furnitureDescs->links() }}
         </div>
 
     </div>

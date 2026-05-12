@@ -1,29 +1,29 @@
 @extends('tl-manager.translation.layouts.app')
 
-@section('title', 'Import Quests')
+@section('title', 'Import Furniture Descriptions')
 
 @section('content')
 
-@include('tl-manager.translation.quests.partials.sidebar')
+@include('tl-manager.translation.furniture-descs.partials.sidebar')
 
 <div class="flex flex-col gap-6">
 
     <div class="flex items-end justify-between flex-wrap gap-4">
         <div>
-            <a href="{{ route('quests.index') }}"
+            <a href="{{ route('furniture-descs.index') }}"
                class="inline-flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-500 no-underline transition-colors duration-150 hover:text-slate-200">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"/>
                     <polyline points="12 19 5 12 12 5"/>
                 </svg>
-                Back to Quests
+                Back to Furniture Descriptions
             </a>
-            <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Import Quests</h1>
+            <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Import Furniture Descriptions</h1>
             <p class="text-[0.8rem] text-slate-500 mt-0.5">Upload a JSON file to batch-import localization entries.</p>
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{ route('quests.index') }}"
+            <a href="{{ route('furniture-descs.index') }}"
                class="inline-flex items-center gap-1.5 px-[1.1rem] py-2 rounded-[0.55rem] text-[0.8rem] font-semibold cursor-pointer no-underline transition-all duration-150 border border-[#252a38] bg-[#181c27] text-slate-400 hover:bg-[#1e2436] hover:text-slate-200 whitespace-nowrap font-[Plus_Jakarta_Sans]">
                 Cancel
             </a>
@@ -75,7 +75,7 @@
                             <line x1="12" y1="9" x2="12" y2="13"/>
                             <line x1="12" y1="17" x2="12.01" y2="17"/>
                         </svg>
-                        Duplicate Quest ID will be updated
+                        Duplicate Furniture Description ID will be updated
                     </div>
 
                     <div class="flex items-start gap-[0.55rem] text-[0.77rem] text-slate-500 leading-relaxed px-3 py-[0.55rem] bg-[#0f1117] border border-[#1e2436] rounded-lg">
@@ -97,9 +97,9 @@
                 </div>
                 <div class="p-[1.1rem] overflow-x-auto">
 <pre class="font-mono text-[0.78rem] leading-[1.8] text-slate-400 m-0 whitespace-pre"><span class="text-slate-600">{</span>
-  <span class="text-blue-400">"_quest_id_101"</span><span class="text-slate-600">:</span> <span class="text-green-400">"_quest_code_A1"</span><span class="text-slate-600">,</span>
-  <span class="text-blue-400">"はじめての編成"</span><span class="text-slate-600">:</span> <span class="text-green-400">"First Fleet Setup"</span><span class="text-slate-600">,</span>
-  <span class="text-blue-400">"艦隊を編成せよ"</span><span class="text-slate-600">:</span> <span class="text-green-400">"Form a fleet"</span>
+  <span class="text-blue-400">"_furniture_id_1"</span><span class="text-slate-600">:</span> <span class="text-green-400">""</span><span class="text-slate-600">,</span>
+  <span class="text-blue-400">"鎮守府の床"</span><span class="text-slate-600">:</span> <span class="text-green-400">"Naval Base Floor"</span><span class="text-slate-600">,</span>
+  <span class="text-blue-400">"鎮守府の艦隊司令官室。"</span><span class="text-slate-600">:</span> <span class="text-green-400">"ABCD"</span>
 <span class="text-slate-600">}</span></pre>
                 </div>
             </div>
@@ -109,7 +109,7 @@
         <form
             id="import-form"
             method="POST"
-            action="{{ route('quests.import') }}"
+            action="{{ route('furniture-descs.import') }}"
             enctype="multipart/form-data"
         >
             @csrf
@@ -162,7 +162,7 @@
 
                     <label class="flex items-start gap-[0.6rem] mx-[1.1rem] mb-[1.1rem] mt-3 px-[0.9rem] py-3 bg-orange-500/[0.06] border border-orange-500/20 rounded-[0.55rem] text-[0.78rem] text-slate-400 leading-relaxed cursor-pointer">
                         <input type="checkbox" name="confirm" class="mt-[1px] accent-orange-500 shrink-0 cursor-pointer">
-                        <span>I understand that duplicate Quest IDs will be <strong class="text-orange-500">overwritten</strong> during import.</span>
+                        <span>I understand that duplicate Furniture Description IDs will be <strong class="text-orange-500">overwritten</strong> during import.</span>
                     </label>
 
                 </div>

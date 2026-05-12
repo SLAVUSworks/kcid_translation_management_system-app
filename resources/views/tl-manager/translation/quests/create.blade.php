@@ -3,6 +3,8 @@
 @section('title', 'Create Quest')
 
 @section('content')
+
+@include('tl-manager.translation.quests.partials.sidebar')
 <form method="POST" action="{{ route('quests.store') }}">
     @csrf
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\json\translation;
+namespace App\Http\Controllers\translation;
 
 use App\Models\Quest;
 use Illuminate\Http\Request;
@@ -10,6 +10,14 @@ use App\Http\Controllers\Controller;
  
 class QuestController extends Controller
 {
+    public static array $menu = [
+        'title' => 'ignore-_quests.json',
+        'route' => 'quests.index',
+        'description' => 'Manage quest translations',
+        'icon' => 'ri-book-open-line',
+        'color' => 'blue',
+    ];
+
     public function index(Request $request)
     {
         $query = Quest::ordered();
@@ -47,7 +55,7 @@ class QuestController extends Controller
  
         Quest::create($validated);
  
-        return redirect()->route('tl-manager.translation.quests.index')
+        return redirect()->route('quests.index')
                        ->with('success', 'Quest berhasil ditambahkan!');
     }
  
@@ -203,7 +211,7 @@ class QuestController extends Controller
  
             DB::commit();
  
-            return redirect()->route('tl-manager.translation.quests.index')
+            return redirect()->route('quests.index')
                            ->with('success', "Berhasil mengimport {$imported} quest!");
  
         } catch (\Exception $e) {
