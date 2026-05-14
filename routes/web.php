@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\translation\QuestController;
 use App\Http\Controllers\translation\FurnitureDescController;
+use App\Http\Controllers\translation\ItemController;
 use App\Http\Controllers\translation\DashboardController;
 
 Route::get('/', function () {
@@ -26,4 +27,11 @@ Route::prefix('admin')->group(function () {
     Route::get('furniture-descs/import/form', [FurnitureDescController::class, 'showImport'])->name('furniture-descs.import.form');
     Route::post('furniture-descs/import/process', [FurnitureDescController::class, 'import'])->name('furniture-descs.import');
     Route::post('furniture-descs/batch-delete', [FurnitureDescController::class, 'batchDelete'])->name('furniture-descs.batch-delete');
+
+    Route::resource('items', ItemController::class);
+    
+    Route::get('items/export/json', [ItemController::class, 'export'])->name('items.export');
+    Route::get('items/import/form', [ItemController::class, 'showImport'])->name('items.import.form');
+    Route::post('items/import/process', [ItemController::class, 'import'])->name('items.import');
+    Route::post('items/batch-delete', [ItemController::class, 'batchDelete'])->name('items.batch-delete');
 });
