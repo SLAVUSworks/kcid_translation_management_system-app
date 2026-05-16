@@ -75,7 +75,7 @@
                             <line x1="12" y1="9" x2="12" y2="13"/>
                             <line x1="12" y1="17" x2="12.01" y2="17"/>
                         </svg>
-                        Duplicate Furniture Description ID will be updated
+                        Duplicate Item IDs will be updated
                     </div>
 
                     <div class="flex items-start gap-[0.55rem] text-[0.77rem] text-slate-500 leading-relaxed px-3 py-[0.55rem] bg-[#0f1117] border border-[#1e2436] rounded-lg">
@@ -97,9 +97,9 @@
                 </div>
                 <div class="p-[1.1rem] overflow-x-auto">
 <pre class="font-mono text-[0.78rem] leading-[1.8] text-slate-400 m-0 whitespace-pre"><span class="text-slate-600">{</span>
-  <span class="text-blue-400">"_item_id_1"</span><span class="text-slate-600">:</span> <span class="text-green-400">""</span><span class="text-slate-600">,</span>
-  <span class="text-blue-400">"鎮守府の床"</span><span class="text-slate-600">:</span> <span class="text-green-400">"Naval Base Floor"</span><span class="text-slate-600">,</span>
-  <span class="text-blue-400">"鎮守府の艦隊司令官室。"</span><span class="text-slate-600">:</span> <span class="text-green-400">"ABCD"</span>
+  <span class="text-blue-400">"_item_id_1"</span><span class="text-slate-600">:</span> <span class="text-green-400">"_item_id_1"</span><span class="text-slate-600">,</span>
+  <span class="text-blue-400">"高速修復材"</span><span class="text-slate-600">:</span> <span class="text-green-400">"Repair Bucket"</span><span class="text-slate-600">,</span>
+  <span class="text-blue-400">"入渠時間を短縮できる。"</span><span class="text-slate-600">:</span> <span class="text-green-400">"ABCD"</span>
 <span class="text-slate-600">}</span></pre>
                 </div>
             </div>
@@ -162,7 +162,7 @@
 
                     <label class="flex items-start gap-[0.6rem] mx-[1.1rem] mb-[1.1rem] mt-3 px-[0.9rem] py-3 bg-orange-500/[0.06] border border-orange-500/20 rounded-[0.55rem] text-[0.78rem] text-slate-400 leading-relaxed cursor-pointer">
                         <input type="checkbox" name="confirm" class="mt-[1px] accent-orange-500 shrink-0 cursor-pointer">
-                        <span>I understand that duplicate Furniture Description IDs will be <strong class="text-orange-500">overwritten</strong> during import.</span>
+                        <span>I understand that duplicate Item IDs will be <strong class="text-orange-500">overwritten</strong> during import.</span>
                     </label>
 
                 </div>

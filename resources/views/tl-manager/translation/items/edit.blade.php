@@ -1,15 +1,15 @@
 @extends('tl-manager.translation.layouts.app')
 
-@section('title', 'Edit Item #' . $furnitureDesc->item_id)
+@section('title', 'Edit Item #' . $item->item_id)
 
 @section('content')
 
 @include('tl-manager.translation.items.partials.sidebar')
 
 <form
-    id="furniture-desc-form"
+    id="item-form"
     method="POST"
-    action="{{ route('items.update', $furnitureDesc) }}"
+    action="{{ route('items.update', $item) }}"
 >
     @csrf
     @method('PUT')
@@ -30,7 +30,7 @@
                 <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Edit Item</h1>
                 <p class="text-[0.8rem] text-slate-500 mt-[0.25rem]">
                     Update localization strings for
-                    <span class="text-orange-500 font-semibold">"{{ $furnitureDesc->item_code }}"</span>
+                    <span class="text-orange-500 font-semibold">"{{ $item->item_code }}"</span>
                 </p>
             </div>
 
@@ -83,7 +83,7 @@
                             <input
                                 type="number"
                                 name="item_id"
-                                value="{{ old('item_id', $furnitureDesc->item_id) }}"
+                                value="{{ old('item_id', $item->item_id) }}"
                                 placeholder="e.g. 102"
                                 required
                                 class="w-full px-[0.8rem] py-[0.55rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.82rem] text-slate-200 outline-none font-[Plus_Jakarta_Sans] transition-all duration-150 placeholder-[#334155] focus:border-blue-500 focus:bg-[#181c27]"
@@ -98,7 +98,7 @@
                             <input
                                 type="text"
                                 name="item_code"
-                                value="{{ old('item_code', $furnitureDesc->item_code) }}"
+                                value="{{ old('item_code', $item->item_code) }}"
                                 placeholder="_item_code_A2"
                                 class="w-full px-[0.8rem] py-[0.55rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.8rem] text-slate-200 outline-none font-mono transition-all duration-150 placeholder-[#334155] focus:border-blue-500 focus:bg-[#181c27]"
                             >
@@ -163,7 +163,7 @@
                                 placeholder="日本語タイトル..."
                                 required
                                 class="w-full p-4 bg-transparent border-none outline-none resize-none text-[0.85rem] text-slate-300 font-[Plus_Jakarta_Sans] leading-[1.65] min-h-[135px] transition-colors duration-150 placeholder-[#2d3a4f] focus:bg-blue-500/[0.03]"
-                            >{{ old('title_jp', $furnitureDesc->title_jp) }}</textarea>
+                            >{{ old('title_jp', $item->title_jp) }}</textarea>
                             @error('title_jp')
                                 <p class="text-[0.72rem] text-red-400 px-4 pb-2">{{ $message }}</p>
                             @enderror
@@ -176,7 +176,7 @@
                                 placeholder="Translated title..."
                                 required
                                 class="w-full p-4 bg-transparent border-none outline-none resize-none text-[0.85rem] text-orange-500 italic font-[Plus_Jakarta_Sans] leading-[1.65] min-h-[135px] transition-colors duration-150 placeholder-[#2d3a4f] focus:bg-blue-500/[0.03]"
-                            >{{ old('title_en', $furnitureDesc->title_en) }}</textarea>
+                            >{{ old('title_en', $item->title_en) }}</textarea>
                             @error('title_en')
                                 <p class="text-[0.72rem] text-red-400 px-4 pb-2">{{ $message }}</p>
                             @enderror
@@ -198,7 +198,7 @@
                                 placeholder="日本語タイトル..."
                                 required
                                 class="w-full p-4 bg-transparent border-none outline-none resize-none text-[0.85rem] text-slate-300 font-[Plus_Jakarta_Sans] leading-[1.65] min-h-[135px] transition-colors duration-150 placeholder-[#2d3a4f] focus:bg-blue-500/[0.03]"
-                            >{{ old('description_jp', $furnitureDesc->description_jp) }}</textarea>
+                            >{{ old('description_jp', $item->description_jp) }}</textarea>
                             @error('description_jp')
                                 <p class="text-[0.72rem] text-red-400 px-4 pb-2">{{ $message }}</p>
                             @enderror
@@ -211,7 +211,7 @@
                                 placeholder="Translated description..."
                                 required
                                 class="w-full p-4 bg-transparent border-none outline-none resize-none text-[0.85rem] text-orange-500 italic font-[Plus_Jakarta_Sans] leading-[1.65] min-h-[135px] transition-colors duration-150 placeholder-[#2d3a4f] focus:bg-blue-500/[0.03]"
-                            >{{ old('description_en', $furnitureDesc->description_en) }}</textarea>
+                            >{{ old('description_en', $item->description_en) }}</textarea>
                             @error('description_en')
                                 <p class="text-[0.72rem] text-red-400 px-4 pb-2">{{ $message }}</p>
                             @enderror
@@ -225,7 +225,7 @@
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
-                        Created: {{ $furnitureDesc->created_at->format('M d, Y · h:i A') }}
+                        Created: {{ $item->created_at->format('M d, Y · h:i A') }}
                     </div>
 
                     <div class="flex items-center gap-1.5 text-[0.75rem] text-slate-600">
@@ -235,7 +235,7 @@
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
-                        Updated: {{ $furnitureDesc->updated_at->format('M d, Y · h:i A') }}
+                        Updated: {{ $item->updated_at->format('M d, Y · h:i A') }}
                     </div>
                 </div>
 
@@ -250,8 +250,8 @@
 <form
     id="delete-form"
     method="POST"
-    action="{{ route('items.destroy', $furnitureDesc) }}"
-    onsubmit="return confirm('Delete furniture description #{{ $furnitureDesc->id }}? This cannot be undone.')"
+    action="{{ route('items.destroy', $item) }}"
+    onsubmit="return confirm('Delete furniture description #{{ $item->id }}? This cannot be undone.')"
     class="hidden"
 >
     @csrf

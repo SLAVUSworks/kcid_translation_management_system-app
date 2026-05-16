@@ -41,7 +41,7 @@
             <thead>
                 <tr class="border-b border-[#1e2436] bg-[#0f1117]">
                     <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">ID</th>
-                    <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">Code</th>
+                    <!-- <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">Code</th> -->
                     <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left">
                         Japanese Title <span class="text-slate-700">(Source)</span>
                     </th>
@@ -61,9 +61,9 @@
                             <span class="text-slate-400 text-[0.78rem] font-medium">#{{ $item->item_id }}</span>
                         </td>
 
-                        <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
+                        <!-- <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
                             <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $item->code }}</span>
-                        </td>
+                        </td> -->
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">
                             <span class="text-[0.9rem] text-slate-200 max-w-[220px] block">{{ $item->title_jp }}</span>
@@ -101,14 +101,14 @@
 
                                 <form
                                     method="POST"
-                                    action="{{ route('furniture-descs.destroy', $furnitureDesc) }}"
-                                    onsubmit="return confirm('Delete furniture description #{{ $furnitureDesc->id }}?');"
+                                    action="{{ route('items.destroy', $item) }}"
+                                    onsubmit="return confirm('Delete item #{{ $item->id }}?');"
                                     class="inline"
                                 >
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            title="Delete furniture description"
+                                            title="Delete item"
                                             class="w-[30px] h-[30px] flex items-center justify-center rounded-[0.4rem] border border-[#252a38] bg-transparent text-slate-500 cursor-pointer transition-all duration-150 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/30">
                                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="3 6 5 6 21 6"/>
