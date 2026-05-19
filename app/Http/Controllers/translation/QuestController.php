@@ -89,6 +89,15 @@ class QuestController extends Controller
                        ->with('success', 'Quest berhasil dihapus!');
     }
  
+    private function decodeStoredNewlines(?string $text): ?string
+    {
+        if ($text === null) {
+            return null;
+        }
+
+        return str_replace('\\n', "\n", $text);
+    }
+ 
     public function export()
     {
         $quests = Quest::ordered()->get();
@@ -101,14 +110,19 @@ class QuestController extends Controller
             $json["_quest_id_{$quest->quest_id}"] = $quest->quest_code;
 
             // TITLE
-            $json[$quest->title_jp] = $quest->title_en;
+            $json[
+                $this->decodeStoredNewlines($quest->title_jp)
+            ] = $this->decodeStoredNewlines($quest->title_en);
 
             // DESCRIPTION
             if (
                 !empty($quest->description_jp) &&
                 !empty($quest->description_en)
             ) {
-                $json[$quest->description_jp] = $quest->description_en;
+
+                $json[
+                    $this->decodeStoredNewlines($quest->description_jp)
+                ] = $this->decodeStoredNewlines($quest->description_en);
             }
         }
 
@@ -127,7 +141,6 @@ class QuestController extends Controller
             ->header('Content-Type', 'application/json; charset=UTF-8')
             ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
     }
- 
 
     public function showImport()
     {

@@ -10,12 +10,11 @@
 
                 <div>
                     <h2 class="text-2xl font-bold text-white">
-                        Translation Management System
+                        KanColle Indonesia Translation Management System
                     </h2>
 
                     <p class="text-gray-400 mt-3 max-w-2xl leading-relaxed">
-                        Centralized dashboard for managing translation assets,
-                        localization strings, and content workflow.
+                        Ijal Malas Ngoding.
                     </p>
                 </div>
 
@@ -29,7 +28,7 @@
                         </p>
 
                         <h3 class="mt-2 font-semibold text-white">
-                            Laravel {{ Illuminate\Foundation\Application::VERSION }}
+                            Laravel v{{ Illuminate\Foundation\Application::VERSION }}
                         </h3>
 
                     </div>
@@ -42,7 +41,7 @@
                         </p>
 
                         <h3 class="mt-2 font-semibold text-white">
-                            PHP {{ PHP_VERSION }}
+                            PHP v{{ PHP_VERSION }}
                         </h3>
 
                     </div>

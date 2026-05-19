@@ -2,6 +2,8 @@
 
 @section('title', 'Quest List')
 
+@section('search_route', route('quests.index'))
+
 @section('content')
 
 @include('tl-manager.translation.quests.partials.sidebar')

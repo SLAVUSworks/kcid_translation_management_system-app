@@ -2,6 +2,8 @@
 
 @section('title', 'Furniture Description List')
 
+@section('search_route', route('furniture-descs.index'))
+
 @section('content')
 
 @include('tl-manager.translation.furniture-descs.partials.sidebar')

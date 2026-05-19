@@ -88,6 +88,15 @@ class ItemController extends Controller
         return redirect()->route('items.index')
                        ->with('success', 'Item berhasil dihapus!');
     }
+
+    private function decodeStoredNewlines(?string $text): ?string
+    {
+        if ($text === null) {
+            return null;
+        }
+
+        return str_replace('\\n', "\n", $text);
+    }
  
     public function export()
     {
@@ -101,14 +110,19 @@ class ItemController extends Controller
             $json["_item_id_{$item->item_id}"] = $item->item_code;
 
             // TITLE
-            $json[$item->title_jp] = $item->title_en;
+            $json[
+                $this->decodeStoredNewlines($item->title_jp)
+            ] = $this->decodeStoredNewlines($item->title_en);
 
             // DESCRIPTION
             if (
                 !empty($item->description_jp) &&
                 !empty($item->description_en)
             ) {
-                $json[$item->description_jp] = $item->description_en;
+
+                $json[
+                    $this->decodeStoredNewlines($item->description_jp)
+                ] = $this->decodeStoredNewlines($item->description_en);
             }
         }
 
@@ -127,7 +141,6 @@ class ItemController extends Controller
             ->header('Content-Type', 'application/json; charset=UTF-8')
             ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
     }
- 
 
     public function showImport()
     {

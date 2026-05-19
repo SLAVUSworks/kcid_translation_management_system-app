@@ -89,6 +89,15 @@ class FurnitureDescController extends Controller
                        ->with('success', 'Furniture Description berhasil dihapus!');
     }
  
+    private function decodeStoredNewlines(?string $text): ?string
+    {
+        if ($text === null) {
+            return null;
+        }
+
+        return str_replace('\\n', "\n", $text);
+    }
+ 
     public function export()
     {
         $furnitureDescs = FurnitureDesc::ordered()->get();
@@ -101,14 +110,19 @@ class FurnitureDescController extends Controller
             $json["_furniture_desc_id_{$furnitureDesc->furniture_desc_id}"] = $furnitureDesc->furniture_desc_code;
 
             // TITLE
-            $json[$furnitureDesc->title_jp] = $furnitureDesc->title_en;
+            $json[
+                $this->decodeStoredNewlines($furnitureDesc->title_jp)
+            ] = $this->decodeStoredNewlines($furnitureDesc->title_en);
 
             // DESCRIPTION
             if (
                 !empty($furnitureDesc->description_jp) &&
                 !empty($furnitureDesc->description_en)
             ) {
-                $json[$furnitureDesc->description_jp] = $furnitureDesc->description_en;
+
+                $json[
+                    $this->decodeStoredNewlines($furnitureDesc->description_jp)
+                ] = $this->decodeStoredNewlines($furnitureDesc->description_en);
             }
         }
 
@@ -127,7 +141,6 @@ class FurnitureDescController extends Controller
             ->header('Content-Type', 'application/json; charset=UTF-8')
             ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
     }
- 
 
     public function showImport()
     {

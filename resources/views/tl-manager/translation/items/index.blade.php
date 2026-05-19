@@ -2,6 +2,8 @@
 
 @section('title', 'Item List')
 
+@section('search_route', route('items.index'))
+
 @section('content')
 
 @include('tl-manager.translation.items.partials.sidebar')
