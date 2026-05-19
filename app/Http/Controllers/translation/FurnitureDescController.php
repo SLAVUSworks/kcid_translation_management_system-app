@@ -14,7 +14,7 @@ class FurnitureDescController extends Controller
         'title' => 'ignore-_furniture_descs.json',
         'route' => 'furniture-descs.index',
         'description' => 'Manage furniture translations',
-        'icon' => 'ri-home-4-line',
+        'icon' => 'fa-solid fa-bed',
         'color' => 'green',
     ];
 

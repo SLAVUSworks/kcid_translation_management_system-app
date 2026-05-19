@@ -62,7 +62,13 @@
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $furnitureDesc->code }}</span>
+                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">
+                                @if($furnitureDesc->furniture_desc_code == "")
+                                    no_default_code
+                                @else
+                                    {{ $furnitureDesc->furniture_desc_code }}
+                                @endif
+                            </span>
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">

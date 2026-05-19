@@ -41,7 +41,7 @@
             <thead>
                 <tr class="border-b border-[#1e2436] bg-[#0f1117]">
                     <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">ID</th>
-                    <!-- <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">Code</th> -->
+                    <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left sm:table-cell hidden">Code</th>
                     <th class="px-[1.1rem] py-3 text-[0.68rem] font-bold tracking-[0.1em] uppercase text-slate-600 text-left">
                         Japanese Title <span class="text-slate-700">(Source)</span>
                     </th>
@@ -61,9 +61,9 @@
                             <span class="text-slate-400 text-[0.78rem] font-medium">#{{ $item->item_id }}</span>
                         </td>
 
-                        <!-- <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $item->code }}</span>
-                        </td> -->
+                        <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
+                            <span class="font-mono text-[0.75rem] font-bold text-orange-500 tracking-[0.03em]">{{ $item->item_code }}</span>
+                        </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle">
                             <span class="text-[0.9rem] text-slate-200 max-w-[220px] block">{{ $item->title_jp }}</span>

@@ -14,7 +14,7 @@ class QuestController extends Controller
         'title' => 'ignore-_quests.json',
         'route' => 'quests.index',
         'description' => 'Manage quest translations',
-        'icon' => 'ri-book-open-line',
+        'icon' => 'fa-solid fa-list-check',
         'color' => 'blue',
     ];
 

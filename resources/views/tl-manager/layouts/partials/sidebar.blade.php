@@ -6,7 +6,7 @@
 
     <div class="pt-20 px-4 pb-6">
 
-        <div
+        <!-- <div
             class="rounded-3xl border border-sidebar-border bg-surface-card p-5 shadow-glow mb-6">
 
             <div class="flex items-center gap-4">
@@ -28,13 +28,13 @@
 
             </div>
 
-        </div>
+        </div> -->
 
         <div class="space-y-2">
 
-            <p class="px-3 text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold">
+            <!-- <p class="px-3 text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold">
                 Navigation
-            </p>
+            </p> -->
 
             <a href="{{ route('admin.dashboard') }}"
                 class="flex items-center gap-4 px-4 py-3 rounded-2xl transition border border-transparent
@@ -48,7 +48,6 @@
 
                 <div>
                     <p class="font-medium">Dashboard</p>
-                    <p class="text-xs text-gray-500">Overview panel</p>
                 </div>
 
             </a>

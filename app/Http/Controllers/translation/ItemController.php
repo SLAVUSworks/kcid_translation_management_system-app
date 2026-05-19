@@ -14,7 +14,7 @@ class ItemController extends Controller
         'title' => 'ignore-_items.json',
         'route' => 'items.index',
         'description' => 'Manage item translations',
-        'icon' => 'ri-book-open-line',
+        'icon' => 'fa-solid fa-box',
         'color' => 'blue',
     ];
 

@@ -47,11 +47,11 @@
 
             <div>
                 <p class="text-accent text-sm font-semibold tracking-widest uppercase">
-                    Translation Management System
+                    KanColle Patch Indonesia
                 </p>
 
                 <h1 class="text-3xl md:text-4xl font-bold text-white mt-2">
-                    Dashboard Overview
+                    Dashboard
                 </h1>
 
                 <p class="text-gray-400 mt-3 max-w-2xl">

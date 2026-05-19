@@ -30,7 +30,7 @@
                 <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Edit Furniture Description</h1>
                 <p class="text-[0.8rem] text-slate-500 mt-[0.25rem]">
                     Update localization strings for
-                    <span class="text-orange-500 font-semibold">"{{ $furnitureDesc->furniture_desc_code }}"</span>
+                    <span class="text-orange-500 font-semibold">"{{ $furnitureDesc->furniture_desc_id }}"</span>
                 </p>
             </div>
 
@@ -99,7 +99,7 @@
                                 type="text"
                                 name="furniture_desc_code"
                                 value="{{ old('furniture_desc_code', $furnitureDesc->furniture_desc_code) }}"
-                                placeholder="_furniture_desc_code_A2"
+                                placeholder="leave this blank!"
                                 class="w-full px-[0.8rem] py-[0.55rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.8rem] text-slate-200 outline-none font-mono transition-all duration-150 placeholder-[#334155] focus:border-blue-500 focus:bg-[#181c27]"
                             >
                             @error('furniture_desc_code')

@@ -84,7 +84,7 @@
         </div>
 
         <div style="flex:1;"></div>
-        <div class="avatar" title="User">U</div>
+        <div><img src="https://avatars.githubusercontent.com/u/88041664?v=4&size=64" class="w-11 h-11 rounded-2xl object-cover border border-sidebar-border shadow-glow"></div>
 
     </header>
 
