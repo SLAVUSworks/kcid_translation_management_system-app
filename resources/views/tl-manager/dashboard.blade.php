@@ -37,7 +37,7 @@
 
     {{-- Header --}}
     <div
-        class="relative overflow-hidden rounded-3xl border border-surface-border bg-surface-card p-8 shadow-glow">
+        class="relative overflow-hidden rounded-xl border border-surface-border bg-surface-card p-8 shadow-glow">
 
         <div
             class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.15),transparent_35%)]">
@@ -51,7 +51,7 @@
                 </p>
 
                 <h1 class="text-3xl md:text-4xl font-bold text-white mt-2">
-                    Dashboard
+                    Modules
                 </h1>
 
                 <p class="text-gray-400 mt-3 max-w-2xl">
@@ -60,10 +60,10 @@
             </div>
 
             <div
-                class="flex items-center gap-4 bg-sidebar-active border border-sidebar-border rounded-2xl px-5 py-4">
+                class="flex items-center gap-4 bg-sidebar-active border border-sidebar-border rounded-xl px-5 py-4">
 
                 <div
-                    class="w-14 h-14 rounded-2xl bg-accent-muted flex items-center justify-center text-accent text-2xl">
+                    class="w-14 h-14 rounded-xl bg-accent-muted flex items-center justify-center text-accent text-2xl">
                     <i class="fa-solid fa-language"></i>
                 </div>
 
@@ -104,7 +104,7 @@
             @foreach ($menus as $menu)
 
             <a href="{{ route($menu['route']) }}"
-                class="group relative overflow-hidden rounded-3xl border border-surface-border bg-surface-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-glow">
+                class="group relative overflow-hidden rounded-xl border border-surface-border bg-surface-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-glow">
 
                 {{-- Glow --}}
                 <div
@@ -116,7 +116,7 @@
                     <div class="flex items-start justify-between">
 
                         <div
-                            class="w-14 h-14 rounded-2xl bg-accent-muted flex items-center justify-center text-accent text-2xl">
+                            class="w-14 h-14 rounded-xl bg-accent-muted flex items-center justify-center text-accent text-2xl">
 
                             <i class="{{ $menu['icon'] }}"></i>
 

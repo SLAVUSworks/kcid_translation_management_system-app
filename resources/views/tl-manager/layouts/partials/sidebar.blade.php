@@ -30,14 +30,9 @@
 
         </div> -->
 
-        <div class="space-y-2">
-
-            <!-- <p class="px-3 text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold">
-                Navigation
-            </p> -->
-
+        <div class="space-y-2 my-2">
             <a href="{{ route('admin.dashboard') }}"
-                class="flex items-center gap-4 px-4 py-3 rounded-2xl transition border border-transparent
+                class="flex items-center gap-4 px-1 py-1 rounded-xl transition border border-transparent
                 {{ request()->routeIs('admin.dashboard')
                     ? 'bg-sidebar-active border-sidebar-border text-white shadow-glow'
                     : 'hover:bg-sidebar-hover text-gray-300 hover:text-white' }}">
@@ -45,14 +40,26 @@
                 <div class="w-10 h-10 rounded-xl bg-accent-muted flex items-center justify-center text-accent">
                     <i class="fa-solid fa-house"></i>
                 </div>
-
                 <div>
                     <p class="font-medium">Dashboard</p>
                 </div>
-
             </a>
         </div>
+        <div class="space-y-2 my-2">
+            <a href="{{ route('admin.modules') }}"
+                class="flex items-center gap-4 px-1 py-1 rounded-xl transition border border-transparent
+                {{ request()->routeIs('admin.modules')
+                    ? 'bg-sidebar-active border-sidebar-border text-white shadow-glow'
+                    : 'hover:bg-sidebar-hover text-gray-300 hover:text-white' }}">
 
+                <div class="w-10 h-10 rounded-xl bg-accent-muted flex items-center justify-center text-accent">
+                    <i class="fa-solid fa-book-atlas"></i>
+                </div>
+                <div>
+                    <p class="font-medium">Modules</p>
+                </div>
+            </a>
+        </div>
     </div>
 
 </aside>

@@ -3,7 +3,7 @@
     <div class="px-4 md:px-6 lg:px-8 py-8">
 
         <div
-            class="rounded-3xl border border-surface-border bg-surface-card p-6 md:p-8">
+            class="rounded-xl border border-surface-border bg-surface-card p-6 md:p-8">
 
             <div
                 class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
@@ -21,7 +21,7 @@
                 <div class="grid grid-cols-2 gap-4 sm:flex sm:items-center">
 
                     <div
-                        class="rounded-2xl border border-sidebar-border bg-sidebar-hover px-5 py-4 text-center">
+                        class="rounded-xl border border-sidebar-border bg-sidebar-hover px-5 py-4 text-center">
 
                         <p class="text-xs uppercase tracking-widest text-gray-500">
                             Framework
@@ -34,7 +34,7 @@
                     </div>
 
                     <div
-                        class="rounded-2xl border border-sidebar-border bg-sidebar-hover px-5 py-4 text-center">
+                        class="rounded-xl border border-sidebar-border bg-sidebar-hover px-5 py-4 text-center">
 
                         <p class="text-xs uppercase tracking-widest text-gray-500">
                             Runtime

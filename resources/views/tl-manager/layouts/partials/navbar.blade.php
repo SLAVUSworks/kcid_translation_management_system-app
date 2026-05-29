@@ -12,9 +12,10 @@
             <a href="#" class="flex items-center gap-4">
 
                 <div
-                    class="w-11 h-11 rounded-2xl bg-accent-muted border border-orange-500/20 flex items-center justify-center shadow-glow">
+                    class="w-fit h-11 rounded-xl flex items-center justify-center">
 
-                    <i class="fa-solid fa-language text-accent text-lg"></i>
+                    <img src="https://github.com/SLAVUSworks/KanColle-Indonesia-Patch-KCCP/blob/(dropped)-development/Non-Game%20Assets/banner.png?raw=true"
+                        class="w-full h-9 rounded-xl object-cover">
 
                 </div>
 
@@ -35,7 +36,7 @@
         <div class="flex items-center gap-3">
 
             <button
-                class="relative w-11 h-11 rounded-2xl bg-sidebar-hover border border-sidebar-border text-gray-300 hover:text-accent transition">
+                class="relative w-11 h-11 rounded-xl bg-sidebar-hover border border-sidebar-border text-gray-300 hover:text-accent transition">
 
                 <i class="fa-solid fa-bell"></i>
 
@@ -58,7 +59,7 @@
 
                 <img
                     src="https://avatars.githubusercontent.com/u/88041664?v=4&size=64"
-                    class="w-11 h-11 rounded-2xl object-cover border border-sidebar-border shadow-glow">
+                    class="w-11 h-11 rounded-xl object-cover border border-sidebar-border shadow-glow">
 
             </div>
 

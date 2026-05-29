@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\translation\QuestController;
 use App\Http\Controllers\translation\FurnitureDescController;
 use App\Http\Controllers\translation\ExpeditionDescController;
 use App\Http\Controllers\translation\ItemController;
-use App\Http\Controllers\translation\DashboardController;
+use App\Http\Controllers\translation\DashboardController as TranslationDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,7 +14,10 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');    
+        ->name('admin.dashboard');
+
+    Route::get('/modules', [TranslationDashboardController::class, 'index'])
+        ->name('admin.modules');
 
     Route::resource('quests', QuestController::class);
     
