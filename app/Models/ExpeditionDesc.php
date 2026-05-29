@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class ExpeditionDesc extends Model
 {
     protected $fillable = [
-        'item_id',
-        'item_code',
+        'expedition_desc_code',
         'title_jp',
         'title_en',
         'description_jp',
@@ -16,7 +15,6 @@ class Item extends Model
     ];
 
     protected $casts = [
-        'item_id' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -25,14 +23,14 @@ class Item extends Model
     {
         return $this->hasOne(
             TranslationStatus::class, 'reference_id'
-        )->where('type', 'item');
+        )->where('type', 'expedition_desc');
     }
 
     /**
-     * Scope untuk mengurutkan berdasarkan item_id
+     * Scope untuk mengurutkan berdasarkan expedition_desc_id
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('item_id', 'asc');
+        return $query->orderBy('id', 'asc');
     }
 }

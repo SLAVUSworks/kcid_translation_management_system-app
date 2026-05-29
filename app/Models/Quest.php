@@ -21,6 +21,13 @@ class Quest extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function translationStatus()
+    {
+        return $this->hasOne(
+            TranslationStatus::class, 'reference_id'
+        )->where('type', 'quest');
+    }
+
     /**
      * Scope untuk mengurutkan berdasarkan quest_id
      */

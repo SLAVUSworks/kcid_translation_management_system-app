@@ -37,8 +37,9 @@
             <div class="flex items-center gap-2">
 
                 <button
-                    type="button"
-                    onclick="document.getElementById('delete-form').submit()"
+                    type="submit"
+                    form="delete-form"
+                    onclick="return confirm('Are you sure you want to delete this data? This action cannot be undone.')"
                     class="inline-flex items-center gap-1.5 px-[1.1rem] py-2 rounded-[0.55rem] text-[0.8rem] font-semibold cursor-pointer transition-all duration-150 border border-red-500/25 bg-red-500/10 text-red-400 hover:bg-red-500/[0.18] whitespace-nowrap font-[Plus_Jakarta_Sans]"
                 >
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -46,6 +47,7 @@
                         <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                         <path d="M10 11v6M14 11v6M9 6V4h6v2"/>
                     </svg>
+
                     Delete
                 </button>
 
@@ -107,6 +109,55 @@
                             @enderror
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="bg-[#13161f] border border-[#1e2436] rounded-[0.85rem] overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-[0.7rem] border-b border-[#1e2436] bg-[#0f1117]">
+                        <svg class="text-orange-500 opacity-80 shrink-0"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span class="text-[0.78rem] font-bold text-slate-400 tracking-[0.04em]">
+                            Translation Status
+                        </span>
+                    </div>
+                    <div class="p-[1.1rem]">
+                        <label class="block text-[0.7rem] font-bold tracking-[0.08em] uppercase text-slate-500 mb-[0.45rem]">
+                            Current Status
+                        </label>
+                        <select
+                            name="status"
+                            class="w-full px-[0.8rem] py-[0.6rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.82rem] text-slate-200 outline-none font-[Plus_Jakarta_Sans] transition-all duration-150 focus:border-orange-500 focus:bg-[#181c27]">
+                            <option
+                                value="untranslated"
+                                {{ old('status', $item->translationStatus?->status ?? 'untranslated') === 'untranslated' ? 'selected' : '' }}>
+                                Untranslated
+                            </option>
+                            <option
+                                value="on-progress"
+                                {{ old('status', $item->translationStatus?->status ?? '') === 'on-progress' ? 'selected' : '' }}>
+                                On Progress
+                            </option>
+                            <option
+                                value="translated"
+                                {{ old('status', $item->translationStatus?->status ?? '') === 'translated' ? 'selected' : '' }}>
+                                Translated
+                            </option>
+                        </select>
+                        @error('status')
+                            <p class="text-[0.72rem] text-red-400 mt-1">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
                 </div>
 

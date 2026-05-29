@@ -1,31 +1,31 @@
 @extends('tl-manager.translation.layouts.app')
 
-@section('title', 'Create Furniture Description')
+@section('title', 'Create Expedition Description')
 
 @section('content')
 
-@include('tl-manager.translation.furniture-descs.partials.sidebar')
+@include('tl-manager.translation.expedition-descs.partials.sidebar')
 
-<form method="POST" action="{{ route('furniture-descs.store') }}">
+<form method="POST" action="{{ route('expedition-descs.store') }}">
     @csrf
 
     <div class="flex flex-col gap-6">
         <div class="flex items-end justify-between flex-wrap gap-4">
             <div>
-                <a href="{{ route('furniture-descs.index') }}"
+                <a href="{{ route('expedition-descs.index') }}"
                    class="inline-flex items-center gap-1.5 text-[0.8rem] font-medium text-slate-500 no-underline transition-colors duration-150 hover:text-slate-200">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="19" y1="12" x2="5" y2="12"/>
                         <polyline points="12 19 5 12 12 5"/>
                     </svg>
-                    Back to Furniture Descriptions
+                    Back to Expedition Descriptions
                 </a>
-                <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Create Furniture Description</h1>
+                <h1 class="text-slate-100 tracking-tight leading-tight mt-1.5">Create Expedition Description</h1>
                 <p class="text-[0.8rem] text-slate-500 mt-0.5">Add a new translation entry to the localization hub.</p>
             </div>
 
             <div class="flex items-center gap-2">
-                <a href="{{ route('furniture-descs.index') }}"
+                <a href="{{ route('expedition-descs.index') }}"
                    class="inline-flex items-center gap-1.5 px-[1.1rem] py-2 rounded-[0.55rem] text-[0.8rem] font-semibold cursor-pointer no-underline transition-all duration-150 border border-[#252a38] bg-[#181c27] text-slate-400 hover:bg-[#1e2436] hover:text-slate-200 whitespace-nowrap font-[Plus_Jakarta_Sans]">
                     Cancel
                 </a>
@@ -35,7 +35,7 @@
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
-                    Create Furniture Description
+                    Create Expedition Description
                 </button>
             </div>
         </div>
@@ -49,35 +49,35 @@
                             <line x1="12" y1="16" x2="12" y2="12"/>
                             <line x1="12" y1="8" x2="12.01" y2="8"/>
                         </svg>
-                        <span class="text-[0.78rem] font-bold text-slate-400 tracking-[0.04em]">Furniture Description Details</span>
+                        <span class="text-[0.78rem] font-bold text-slate-400 tracking-[0.04em]">Expedition Description Details</span>
                     </div>
 
                     <div class="p-[1.1rem] flex flex-col gap-[0.9rem]">
                         <div>
-                            <label class="block text-[0.7rem] font-bold tracking-[0.08em] uppercase text-slate-500 mb-[0.35rem]">Furniture Description ID</label>
+                            <label class="block text-[0.7rem] font-bold tracking-[0.08em] uppercase text-slate-500 mb-[0.35rem]">Expedition Description ID</label>
                             <input
                                 type="number"
-                                name="furniture_desc_id"
-                                value="{{ old('furniture_desc_id') }}"
+                                name="expedition_desc_id"
+                                value="{{ old('expedition_desc_id') }}"
                                 placeholder="e.g. 101"
                                 required
                                 class="w-full px-[0.8rem] py-[0.55rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.82rem] text-slate-200 outline-none font-[Plus_Jakarta_Sans] transition-all duration-150 placeholder-[#334155] focus:border-blue-500 focus:bg-[#181c27]"
                             >
-                            @error('furniture_desc_id')
+                            @error('expedition_desc_id')
                                 <p class="text-[0.72rem] text-red-400 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label class="block text-[0.7rem] font-bold tracking-[0.08em] uppercase text-slate-500 mb-[0.35rem]">Furniture Description Code (Nullable)</label>
+                            <label class="block text-[0.7rem] font-bold tracking-[0.08em] uppercase text-slate-500 mb-[0.35rem]">Expedition Description Code (Nullable)</label>
                             <input
                                 type="text"
-                                name="furniture_desc_code"
-                                value="{{ old('furniture_desc_code') }}"
-                                placeholder="leave this blank!"
+                                name="expedition_desc_code"
+                                value="{{ old('expedition_desc_code') }}"
+                                placeholder="_expedition_desc_code_A1"
                                 class="w-full px-[0.8rem] py-[0.55rem] bg-[#0f1117] border border-[#252a38] rounded-lg text-[0.8rem] text-slate-200 outline-none font-mono transition-all duration-150 placeholder-[#334155] focus:border-blue-500 focus:bg-[#181c27]"
                             >
-                            @error('furniture_desc_code')
+                            @error('expedition_desc_code')
                                 <p class="text-[0.72rem] text-red-400 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -123,7 +123,7 @@
                             <line x1="12" y1="8" x2="12.01" y2="8"/>
                             <line x1="12" y1="12" x2="12" y2="16"/>
                         </svg>
-                        Furniture Description ID controls ordering in exports
+                        Expedition Description ID controls ordering in exports
                     </div>
                     <div class="flex items-start gap-2 text-[0.75rem] text-slate-600 leading-relaxed">
                         <svg class="shrink-0 mt-[1px] text-slate-700" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -131,7 +131,7 @@
                             <line x1="12" y1="8" x2="12.01" y2="8"/>
                             <line x1="12" y1="12" x2="12" y2="16"/>
                         </svg>
-                        Quest Code must be unique (e.g. _quest_code_A1)
+                        Expedition Code must be unique (e.g. _expedition_code_A1)
                     </div>
                     <div class="flex items-start gap-2 text-[0.75rem] text-slate-600 leading-relaxed">
                         <svg class="shrink-0 mt-[1px] text-slate-700" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

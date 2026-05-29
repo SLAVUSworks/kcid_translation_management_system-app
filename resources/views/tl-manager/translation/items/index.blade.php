@@ -76,10 +76,18 @@
                         </td>
 
                         <td class="px-[1.1rem] py-4 text-[0.83rem] text-slate-400 align-middle sm:table-cell hidden">
-                            @if($item->description_en)
+                            @php
+                                $status = $item->translationStatus?->status ?? 'untranslated';
+                            @endphp
+                            @if($status === 'translated')
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[0.35rem] text-[0.65rem] font-bold tracking-[0.1em] uppercase whitespace-nowrap border bg-emerald-500/10 border-emerald-500/30 text-emerald-300">
                                     <span class="w-[5px] h-[5px] rounded-full bg-current"></span>
                                     Translated
+                                </span>
+                            @elseif($status === 'on-progress')
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[0.35rem] text-[0.65rem] font-bold tracking-[0.1em] uppercase whitespace-nowrap border bg-yellow-500/10 border-yellow-500/30 text-yellow-300">
+                                    <span class="w-[5px] h-[5px] rounded-full bg-current"></span>
+                                    On Progress
                                 </span>
                             @else
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[0.35rem] text-[0.65rem] font-bold tracking-[0.1em] uppercase whitespace-nowrap border bg-red-500/10 border-red-500/30 text-red-300">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\translation;
 
 use App\Models\FurnitureDesc;
+use App\Models\TranslationStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -20,67 +21,244 @@ class FurnitureDescController extends Controller
 
     public function index(Request $request)
     {
-        $query = FurnitureDesc::ordered();
- 
-        if ($request->has('search') && $request->search) {
+        $query = FurnitureDesc::with('translationStatus')
+            ->ordered();
+
+        // SEARCH
+        if ($request->filled('search')) {
+
             $search = $request->search;
+
             $query->where(function ($q) use ($search) {
-                $q->where('title_jp', 'like', "%$search%")
-                  ->orWhere('title_en', 'like', "%$search%")
-                  ->orWhere('furniture_desc_code', 'like', "%$search%")
-                  ->orWhere('furniture_desc_id', $search);
+
+                $q->where('title_jp', 'like', "%{$search}%")
+                ->orWhere('title_en', 'like', "%{$search}%")
+                ->orWhere('furniture_desc_code', 'like', "%{$search}%")
+                ->orWhere('furniture_desc_id', $search);
+
             });
         }
- 
-        $furnitureDescs = $query->paginate(100)->withQueryString();
- 
-        return view('tl-manager.translation.furniture-descs.index', compact('furnitureDescs'));
+
+        // STATUS FILTER
+        if ($request->filled('status')) {
+
+            $query->whereHas(
+                'translationStatus',
+                function ($q) use ($request) {
+
+                    $q->where(
+                        'status',
+                        $request->status
+                    );
+                }
+            );
+        }
+
+        $furnitureDescs = $query
+            ->paginate(100)
+            ->withQueryString();
+
+        return view(
+            'tl-manager.translation.furniture-descs.index',
+            compact('furnitureDescs')
+        );
     }
  
     public function create()
     {
         return view('tl-manager.translation.furniture-descs.create');
     }
- 
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'furniture_desc_id' => 'required|integer|unique:furniture_descs,furniture_desc_id',
-            'furniture_desc_code' => 'nullable|string|max:255',
-            'title_jp' => 'required|string',
-            'title_en' => 'required|string',
-            'description_jp' => 'nullable|string',
-            'description_en' => 'nullable|string',
+            'furniture_desc_id' =>
+                'required|integer|unique:furniture_descs,furniture_desc_id',
+
+            'furniture_desc_code' =>
+                'nullable|string|max:255',
+
+            'title_jp' =>
+                'required|string',
+
+            'title_en' =>
+                'required|string',
+
+            'description_jp' =>
+                'nullable|string',
+
+            'description_en' =>
+                'nullable|string',
         ]);
- 
-        FurnitureDesc::create($validated);
- 
-        return redirect()->route('furniture-descs.index')
-                       ->with('success', 'Furniture Description berhasil ditambahkan!');
+
+        $validated['title_jp'] =
+            $this->normalizeNewlines(
+                $validated['title_jp']
+            );
+
+        $validated['title_en'] =
+            $this->normalizeNewlines(
+                $validated['title_en']
+            );
+
+        $validated['description_jp'] =
+            $this->normalizeNewlines(
+                $validated['description_jp'] ?? null
+            );
+
+        $validated['description_en'] =
+            $this->normalizeNewlines(
+                $validated['description_en'] ?? null
+            );
+
+        DB::beginTransaction();
+
+        try {
+
+            $furnitureDesc = FurnitureDesc::create(
+                $validated
+            );
+
+            TranslationStatus::create([
+                'type' => 'furniture_desc',
+                'reference_id' => $furnitureDesc->id,
+                'status' => 'untranslated',
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('furniture-descs.index')
+                ->with(
+                    'success',
+                    'Furniture Description berhasil ditambahkan!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
- 
+
     public function edit(FurnitureDesc $furnitureDesc)
     {
-        return view('tl-manager.translation.furniture-descs.edit', compact('furnitureDesc'));
+        $furnitureDesc->load('translationStatus');
+
+        return view('tl-manager.translation.furniture-descs.edit',compact('furnitureDesc'));
     }
- 
-    public function update(Request $request, FurnitureDesc $furnitureDesc)
-    {
+
+    public function update(
+        Request $request,
+        FurnitureDesc $furnitureDesc
+    ) {
+
         $validated = $request->validate([
-            'furniture_desc_id' => 'required|integer|unique:furniture_descs,furniture_desc_id,' . $furnitureDesc->id,
-            'furniture_desc_code' => 'nullable|string|max:255',
-            'title_jp' => 'required|string',
-            'title_en' => 'required|string',
-            'description_jp' => 'nullable|string',
-            'description_en' => 'nullable|string',
+            'furniture_desc_id' =>
+                'required|integer|unique:furniture_descs,furniture_desc_id,' .
+                $furnitureDesc->id,
+
+            'furniture_desc_code' =>
+                'nullable|string|max:255',
+
+            'title_jp' =>
+                'required|string',
+
+            'title_en' =>
+                'required|string',
+
+            'description_jp' =>
+                'nullable|string',
+
+            'description_en' =>
+                'nullable|string',
+
+            'status' =>
+                'required|in:translated,untranslated,on-progress',
         ]);
- 
-        $furnitureDesc->update($validated);
- 
-        return redirect()->route('furniture-descs.index')
-                       ->with('success', 'Furniture Description berhasil diperbarui!');
+
+        $validated['title_jp'] =
+            $this->normalizeNewlines(
+                $validated['title_jp']
+            );
+
+        $validated['title_en'] =
+            $this->normalizeNewlines(
+                $validated['title_en']
+            );
+
+        $validated['description_jp'] =
+            $this->normalizeNewlines(
+                $validated['description_jp'] ?? null
+            );
+
+        $validated['description_en'] =
+            $this->normalizeNewlines(
+                $validated['description_en'] ?? null
+            );
+
+        DB::beginTransaction();
+
+        try {
+
+            $furnitureDesc->update([
+                'furniture_desc_id' =>
+                    $validated['furniture_desc_id'],
+
+                'furniture_desc_code' =>
+                    $validated['furniture_desc_code'],
+
+                'title_jp' =>
+                    $validated['title_jp'],
+
+                'title_en' =>
+                    $validated['title_en'],
+
+                'description_jp' =>
+                    $validated['description_jp'],
+
+                'description_en' =>
+                    $validated['description_en'],
+            ]);
+
+            TranslationStatus::updateOrCreate(
+                [
+                    'type' => 'furniture_desc',
+                    'reference_id' => $furnitureDesc->id,
+                ],
+                [
+                    'status' => $validated['status'],
+                ]
+            );
+
+            DB::commit();
+
+            if ($validated['status'] === 'on-progress') { 
+                return back()->with( 'success', 'Furniture Description saved as On-Progress!' ); 
+            }
+
+            return redirect()
+                ->route('furniture-descs.index')
+                ->with(
+                    'success',
+                    'Furniture Description berhasil diperbarui!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
- 
+
     public function destroy(FurnitureDesc $furnitureDesc)
     {
         $furnitureDesc->delete();
@@ -212,6 +390,16 @@ class FurnitureDescController extends Controller
                             'title_en' => $this->normalizeNewlines($titleEn),
                             'description_jp' => $this->normalizeNewlines($descriptionJp),
                             'description_en' => $this->normalizeNewlines($descriptionEn),
+                        ]
+                    );
+ 
+                    TranslationStatus::updateOrCreate(
+                        [
+                            'type' => 'furniture_desc',
+                            'reference_id' => FurnitureDesc::where('furniture_desc_id', $furnitureDescId)->first()->id,
+                        ],
+                        [
+                            'status' => 'untranslated',
                         ]
                     );
  

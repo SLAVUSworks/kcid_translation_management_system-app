@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\translation;
 
 use App\Models\Item;
+use App\Models\TranslationStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -20,21 +21,47 @@ class ItemController extends Controller
 
     public function index(Request $request)
     {
-        $query = Item::ordered();
- 
-        if ($request->has('search') && $request->search) {
+        $query = Item::with('translationStatus')
+            ->ordered();
+
+        // SEARCH
+        if ($request->filled('search')) {
+
             $search = $request->search;
+
             $query->where(function ($q) use ($search) {
-                $q->where('title_jp', 'like', "%$search%")
-                  ->orWhere('title_en', 'like', "%$search%")
-                  ->orWhere('item_code', 'like', "%$search%")
-                  ->orWhere('item_id', $search);
+
+                $q->where('title_jp', 'like', "%{$search}%")
+                ->orWhere('title_en', 'like', "%{$search}%")
+                ->orWhere('item_code', 'like', "%{$search}%")
+                ->orWhere('item_id', $search);
+
             });
         }
- 
-        $items = $query->paginate(100)->withQueryString();
- 
-        return view('tl-manager.translation.items.index', compact('items'));
+
+        // STATUS FILTER
+        if ($request->filled('status')) {
+
+            $query->whereHas(
+                'translationStatus',
+                function ($q) use ($request) {
+
+                    $q->where(
+                        'status',
+                        $request->status
+                    );
+                }
+            );
+        }
+
+        $items = $query
+            ->paginate(100)
+            ->withQueryString();
+
+        return view(
+            'tl-manager.translation.items.index',
+            compact('items')
+        );
     }
  
     public function create()
@@ -52,33 +79,157 @@ class ItemController extends Controller
             'description_jp' => 'nullable|string',
             'description_en' => 'nullable|string',
         ]);
- 
-        Item::create($validated);
- 
-        return redirect()->route('items.index')
-                       ->with('success', 'Item berhasil ditambahkan!');
+
+        $validated['title_jp'] =
+            $this->normalizeNewlines(
+                $validated['title_jp']
+            );
+
+        $validated['title_en'] =
+            $this->normalizeNewlines(
+                $validated['title_en']
+            );
+
+        $validated['description_jp'] =
+            $this->normalizeNewlines(
+                $validated['description_jp'] ?? null
+            );
+
+        $validated['description_en'] =
+            $this->normalizeNewlines(
+                $validated['description_en'] ?? null
+            );
+
+        DB::beginTransaction();
+
+        try {
+
+            $item = Item::create($validated);
+
+            TranslationStatus::create([
+                'type' => 'item',
+                'reference_id' => $item->id,
+                'status' => 'untranslated',
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('items.index')
+                ->with(
+                    'success',
+                    'Item berhasil ditambahkan!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
- 
+
     public function edit(Item $item)
     {
-        return view('tl-manager.translation.items.edit', compact('item'));
+        $item->load('translationStatus');
+
+        return view('tl-manager.translation.items.edit',compact('item'));
     }
- 
+
     public function update(Request $request, Item $item)
     {
         $validated = $request->validate([
-            'item_id' => 'required|integer|unique:items,item_id,' . $item->id,
-            'item_code' => 'required|string|max:255',
-            'title_jp' => 'required|string',
-            'title_en' => 'required|string',
-            'description_jp' => 'nullable|string',
-            'description_en' => 'nullable|string',
+            'item_id' =>
+                'required|integer|unique:items,item_id,' .
+                $item->id,
+
+            'item_code' =>
+                'required|string|max:255',
+
+            'title_jp' =>
+                'required|string',
+
+            'title_en' =>
+                'required|string',
+
+            'description_jp' =>
+                'nullable|string',
+
+            'description_en' =>
+                'nullable|string',
+
+            'status' =>
+                'required|in:translated,untranslated,on-progress',
         ]);
- 
-        $item->update($validated);
- 
-        return redirect()->route('items.index')
-                       ->with('success', 'Item berhasil diperbarui!');
+
+        $validated['title_jp'] =
+            $this->normalizeNewlines(
+                $validated['title_jp']
+            );
+
+        $validated['title_en'] =
+            $this->normalizeNewlines(
+                $validated['title_en']
+            );
+
+        $validated['description_jp'] =
+            $this->normalizeNewlines(
+                $validated['description_jp'] ?? null
+            );
+
+        $validated['description_en'] =
+            $this->normalizeNewlines(
+                $validated['description_en'] ?? null
+            );
+
+        DB::beginTransaction();
+
+        try {
+
+            $item->update([
+                'item_id' => $validated['item_id'],
+                'item_code' => $validated['item_code'],
+                'title_jp' => $validated['title_jp'],
+                'title_en' => $validated['title_en'],
+                'description_jp' => $validated['description_jp'],
+                'description_en' => $validated['description_en'],
+            ]);
+
+            TranslationStatus::updateOrCreate(
+                [
+                    'type' => 'item',
+                    'reference_id' => $item->id,
+                ],
+                [
+                    'status' => $validated['status'],
+                ]
+            );
+
+            DB::commit();
+
+            if ($validated['status'] === 'on-progress') { 
+                return back()->with( 'success', 'Item saved as On-Progress!' ); 
+            }
+
+            return redirect()
+                ->route('items.index')
+                ->with(
+                    'success',
+                    'Item berhasil diperbarui!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
  
     public function destroy(Item $item)
@@ -212,6 +363,16 @@ class ItemController extends Controller
                             'title_en' => $this->normalizeNewlines($titleEn),
                             'description_jp' => $this->normalizeNewlines($descriptionJp),
                             'description_en' => $this->normalizeNewlines($descriptionEn),
+                        ]
+                    );
+
+                    TranslationStatus::updateOrCreate(
+                        [
+                            'type' => 'item',
+                            'reference_id' => Item::where('item_id', $questId)->first()->id,
+                        ],
+                        [
+                            'status' => 'untranslated',
                         ]
                     );
  

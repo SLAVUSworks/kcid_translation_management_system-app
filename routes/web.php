@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\translation\QuestController;
 use App\Http\Controllers\translation\FurnitureDescController;
+use App\Http\Controllers\translation\ExpeditionDescController;
 use App\Http\Controllers\translation\ItemController;
 use App\Http\Controllers\translation\DashboardController;
 
@@ -27,6 +28,13 @@ Route::prefix('admin')->group(function () {
     Route::get('furniture-descs/import/form', [FurnitureDescController::class, 'showImport'])->name('furniture-descs.import.form');
     Route::post('furniture-descs/import/process', [FurnitureDescController::class, 'import'])->name('furniture-descs.import');
     Route::post('furniture-descs/batch-delete', [FurnitureDescController::class, 'batchDelete'])->name('furniture-descs.batch-delete');
+
+    Route::resource('expedition-descs', ExpeditionDescController::class);
+
+    Route::get('expedition-descs/export/json', [ExpeditionDescController::class, 'export'])->name('expedition-descs.export');
+    Route::get('expedition-descs/import/form', [ExpeditionDescController::class, 'showImport'])->name('expedition-descs.import.form');
+    Route::post('expedition-descs/import/process', [ExpeditionDescController::class, 'import'])->name('expedition-descs.import');
+    Route::post('expedition-descs/batch-delete', [ExpeditionDescController::class, 'batchDelete'])->name('expedition-descs.batch-delete');
 
     Route::resource('items', ItemController::class);
     

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\translation;
 
 use App\Models\Quest;
+use App\Models\TranslationStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -20,23 +21,51 @@ class QuestController extends Controller
 
     public function index(Request $request)
     {
-        $query = Quest::ordered();
- 
-        if ($request->has('search') && $request->search) {
+        $query = Quest::with('translationStatus')
+            ->ordered();
+
+        // SEARCH
+        if ($request->filled('search')) {
+
             $search = $request->search;
+
             $query->where(function ($q) use ($search) {
-                $q->where('title_jp', 'like', "%$search%")
-                  ->orWhere('title_en', 'like', "%$search%")
-                  ->orWhere('quest_code', 'like', "%$search%")
-                  ->orWhere('quest_id', $search);
+
+                $q->where('title_jp', 'like', "%{$search}%")
+                ->orWhere('title_en', 'like', "%{$search}%")
+                ->orWhere('description_jp', 'like', "%{$search}%")
+                ->orWhere('description_en', 'like', "%{$search}%")
+                ->orWhere('quest_code', 'like', "%{$search}%")
+                ->orWhere('quest_id', $search);
+
             });
         }
- 
-        $quests = $query->paginate(100)->withQueryString();
- 
-        return view('tl-manager.translation.quests.index', compact('quests'));
+
+        // STATUS FILTER
+        if ($request->filled('status')) {
+
+            $query->whereHas(
+                'translationStatus',
+                function ($q) use ($request) {
+
+                    $q->where(
+                        'status',
+                        $request->status
+                    );
+                }
+            );
+        }
+
+        $quests = $query
+            ->paginate(100)
+            ->withQueryString();
+
+        return view(
+            'tl-manager.translation.quests.index',
+            compact('quests')
+        );
     }
- 
+
     public function create()
     {
         return view('tl-manager.translation.quests.create');
@@ -52,15 +81,43 @@ class QuestController extends Controller
             'description_jp' => 'nullable|string',
             'description_en' => 'nullable|string',
         ]);
- 
-        Quest::create($validated);
- 
-        return redirect()->route('quests.index')
-                       ->with('success', 'Quest berhasil ditambahkan!');
+
+        DB::beginTransaction();
+
+        try {
+
+            $quest = Quest::create($validated);
+
+            TranslationStatus::create([
+                'type' => 'quest',
+                'reference_id' => $quest->id,
+                'status' => 'untranslated',
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('quests.index')
+                ->with(
+                    'success',
+                    'Quest berhasil ditambahkan!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
- 
+
     public function edit(Quest $quest)
     {
+        $quest->load('translationStatus');
+
         return view('tl-manager.translation.quests.edit', compact('quest'));
     }
  
@@ -73,14 +130,60 @@ class QuestController extends Controller
             'title_en' => 'required|string',
             'description_jp' => 'nullable|string',
             'description_en' => 'nullable|string',
+
+            // STATUS
+            'status' => 'required|in:translated,untranslated,on-progress',
         ]);
- 
-        $quest->update($validated);
- 
-        return redirect()->route('quests.index')
-                       ->with('success', 'Quest berhasil diperbarui!');
+
+        DB::beginTransaction();
+
+        try {
+
+            // UPDATE QUEST
+            $quest->update([
+                'quest_id' => $validated['quest_id'],
+                'quest_code' => $validated['quest_code'],
+                'title_jp' => $validated['title_jp'],
+                'title_en' => $validated['title_en'],
+                'description_jp' => $validated['description_jp'],
+                'description_en' => $validated['description_en'],
+            ]);
+
+            // UPDATE STATUS
+            TranslationStatus::updateOrCreate(
+                [
+                    'type' => 'quest',
+                    'reference_id' => $quest->id,
+                ],
+                [
+                    'status' => $validated['status'],
+                ]
+            );
+
+            DB::commit();
+
+            if ($validated['status'] === 'on-progress') { 
+                return back()->with( 'success', 'Quest saved as On-Progress!' ); 
+            }
+
+            return redirect()
+                ->route('quests.index')
+                ->with(
+                    'success',
+                    'Quest berhasil diperbarui!'
+                );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
+        }
     }
- 
+
     public function destroy(Quest $quest)
     {
         $quest->delete();
@@ -207,11 +310,21 @@ class QuestController extends Controller
                     Quest::updateOrCreate(
                         ['quest_id' => $questId],
                         [
-                            'quest_code' => $questCode,
-                            'title_jp' => $this->normalizeNewlines($titleJp),
-                            'title_en' => $this->normalizeNewlines($titleEn),
-                            'description_jp' => $this->normalizeNewlines($descriptionJp),
-                            'description_en' => $this->normalizeNewlines($descriptionEn),
+                            'quest_code'        => $questCode,
+                            'title_jp'          => $this->normalizeNewlines($titleJp),
+                            'title_en'          => $this->normalizeNewlines($titleEn),
+                            'description_jp'    => $this->normalizeNewlines($descriptionJp),
+                            'description_en'    => $this->normalizeNewlines($descriptionEn),
+                        ]
+                    );
+
+                    TranslationStatus::updateOrCreate(
+                        [
+                            'type'              => 'quest',
+                            'reference_id'      => Quest::where('quest_id', $questId)->first()->id,
+                        ],
+                        [
+                            'status'            => 'untranslated',
                         ]
                     );
  
@@ -236,15 +349,15 @@ class QuestController extends Controller
     public function batchDelete(Request $request)
     {
         $validated = $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'integer|exists:quests,id',
+            'ids'           => 'required|array',
+            'ids.*'         => 'integer|exists:quests,id',
         ]);
  
         $deleted = Quest::whereIn('id', $validated['ids'])->delete();
  
         return response()->json([
-            'success' => true,
-            'message' => "Berhasil menghapus {$deleted} quest!",
+            'success'       => true,
+            'message'       => "Berhasil menghapus {$deleted} quest!",
         ]);
     }
 }

@@ -21,6 +21,13 @@ class FurnitureDesc extends Model
         'updated_at' => 'datetime',
     ];
 
+    public function translationStatus()
+    {
+        return $this->hasOne(
+            TranslationStatus::class, 'reference_id'
+        )->where('type', 'furniture_desc');
+    }
+
     /**
      * Scope untuk mengurutkan berdasarkan furniture_desc_id
      */
