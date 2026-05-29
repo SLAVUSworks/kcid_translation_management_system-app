@@ -2,7 +2,7 @@
     class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
 
 <aside id="sidebar"
-    class="fixed top-0 left-0 z-50 lg:z-40 w-72 h-screen bg-sidebar border-r border-sidebar-border transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto">
+    class="fixed top-0 left-0 z-40 lg:z-40 w-72 h-screen bg-sidebar border-r border-sidebar-border transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto">
 
     <div class="pt-20 px-4 pb-6">
 
