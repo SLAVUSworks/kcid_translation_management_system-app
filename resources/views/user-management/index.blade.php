@@ -157,39 +157,32 @@
                             </span>
 
                         </td>
+                        <td class="px-6 py-4 align-middle">
+                            <div class="relative inline-flex items-center">
 
-                        <td class="px-6 py-4">
+                                <form method="POST" action="{{ route('users.updateRole', $user) }}" class="m-0">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select
+                                        name="role"
+                                        onchange="this.form.submit()"
+                                        class="appearance-none h-10 rounded-xl border border-white/10 bg-[#13161f] pl-3 pr-10 text-sm text-white focus:border-orange-500/40 focus:ring focus:ring-orange-500/10">
 
-                            <form
-                                method="POST"
-                                action="{{ route('users.updateRole', $user) }}">
+                                        <option value="unverified" @selected($user->role === 'unverified')>Unverified</option>
+                                        <option value="verified" @selected($user->role === 'verified')>Verified</option>
+                                        <option value="admin" @selected($user->role === 'admin')>Admin</option>
 
-                                @csrf
-                                @method('PATCH')
+                                    </select>
+                                    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/60">
+                                        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M5.5 7.5l4.5 4.5 4.5-4.5" />
+                                        </svg>
+                                    </div>
 
-                                <select
-                                    name="role"
-                                    onchange="this.form.submit()"
-                                    class="rounded-xl border border-white/10 bg-[#13161f] px-3 py-2 text-sm text-white focus:border-orange-500/40 focus:ring focus:ring-orange-500/10">
+                                </form>
 
-                                    <option value="unverified" @selected($user->role === 'unverified')>
-                                        Unverified
-                                    </option>
-
-                                    <option value="verified" @selected($user->role === 'verified')>
-                                        Verified
-                                    </option>
-
-                                    <option value="admin" @selected($user->role === 'admin')>
-                                        Admin
-                                    </option>
-
-                                </select>
-
-                            </form>
-
+                            </div>
                         </td>
-
                     </tr>
 
                 @empty

@@ -9,8 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script src="https://cdn.tailwindcss.com"></script>
+        @vite('resources/css/app.css')
 
         <style>
             body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -46,13 +45,13 @@
     <body class="bg-[#13161f] text-[#f1f2f6] min-h-screen antialiased">
         <div class="fixed pointer-events-none z-0 rounded-full blur-[120px] w-[600px] h-[600px] -top-[200px] -right-[150px] bg-[rgba(249,115,22,0.07)]"></div>
         <div class="fixed pointer-events-none z-0 rounded-full blur-[120px] w-[400px] h-[400px] -bottom-[100px] -left-[100px] bg-[rgba(249,115,22,0.04)]"></div>
-        <div class="fixed right-0 top-0 bottom-0 w-1/2 z-0 pointer-events-none">
+        <div class="hidden lg:block fixed right-0 top-0 bottom-0 w-1/2 z-0 pointer-events-none">
             <img src="https://safebooru.org//samples/567/sample_2d57967d114c18f7d50e51752acb99ae68a53ad7.jpg?6653367"
                  alt=""
                  class="w-full h-full object-cover opacity-20">
         </div>
         <div class="relative z-[1] min-h-screen flex flex-col">
-            <nav class="flex items-center justify-between px-8 py-2 backdrop-blur-xl sticky top-0 z-10">
+            <nav class="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 backdrop-blur-xl sticky top-0 z-10">
                 <a href="/" class="flex items-center gap-2.5 no-underline">
                     <div class="h-11 flex items-center justify-center">
                         <img src="https://github.com/SLAVUSworks/KanColle-Indonesia-Patch-KCCP/blob/(dropped)-development/Non-Game%20Assets/banner.png?raw=true"
@@ -82,22 +81,22 @@
                     @endif
                 </div>
             </nav>
-            <main class="flex-1 grid grid-cols-2 max-lg:grid-cols-1 gap-0 max-w-[1200px] mx-auto w-full px-8 py-20 max-lg:py-12 items-center">
+            <main class="flex-1 grid lg:grid-cols-2 gap-10 lg:gap-0 max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-20 items-center">
                 <div>
                     <div class="inline-flex items-center gap-1.5 px-3 py-[5px] bg-[rgba(249,115,22,0.12)] border border-[rgba(249,115,22,0.2)] rounded-full text-[12px] font-medium text-[#f97316] mb-7 tracking-[0.01em]">
                         KanColle Indonesia Patch
                     </div>
-                    <h1 class="text-[52px] max-lg:text-[38px] max-sm:text-[30px] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#f1f2f6] mb-5">
+                    <h1 class="text-[30px] sm:text-[38px] lg:text-[52px] font-extrabold leading-tight tracking-[-0.03em] text-[#f1f2f6] mb-5">
                         KCID <span class="text-[#f97316]">Translation</span><br>
                         Management<br>
                         System
                     </h1>
-                    <p class="text-base font-normal leading-[1.7] text-[#8892a4] max-w-[440px] mb-10">
+                    <p class="text-sm sm:text-base font-normal leading-[1.7] text-[#8892a4] max-w-[440px] mb-8 lg:mb-10">
                         Patch Bahasa Indonesia untuk Web Game KanColle.
                     </p>
-                    <div class="flex items-center gap-3 flex-wrap max-sm:flex-col max-sm:items-start">
+                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                         <a href="/admin"
-                           class="btn-glow inline-flex items-center gap-2 px-6 py-3 bg-[#f97316] text-white text-sm font-semibold rounded-[10px] no-underline border-0 transition-all duration-150 hover:bg-[#ea6c0f] hover:-translate-y-px active:translate-y-0">
+                           class="w-full sm:w-auto btn-glow inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#f97316] text-white text-sm font-semibold rounded-[10px] no-underline border-0 transition-all duration-150 hover:bg-[#ea6c0f] hover:-translate-y-px active:translate-y-0">
                             Open Dashboard
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -105,7 +104,7 @@
                         </a>
                         <a href="https://github.com/SLAVUSworks/kcid_translation_management_system-app"
                            target="_blank"
-                           class="inline-flex items-center gap-2 px-6 py-3 bg-[#181c27] text-[#f1f2f6] text-sm font-medium rounded-[10px] no-underline border border-[#252a38] transition-all duration-150 hover:border-[rgba(249,115,22,0.3)] hover:bg-[#1a1d27]">
+                           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#181c27] text-[#f1f2f6] text-sm font-medium rounded-[10px] no-underline border border-[#252a38] transition-all duration-150 hover:border-[rgba(249,115,22,0.3)] hover:bg-[#1a1d27]">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8c0 2.87 1.86 5.3 4.44 6.16.32.06.44-.14.44-.31v-1.09c-1.8.39-2.18-.87-2.18-.87-.29-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.53.71 1.9.54.06-.42.23-.71.41-.87-1.44-.16-2.95-.72-2.95-3.2 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.71 0 0 .55-.18 1.8.67.52-.14 1.08-.22 1.63-.22s1.11.08 1.63.22c1.25-.85 1.8-.67 1.8-.67.35.89.13 1.55.06 1.71.42.45.67 1.03.67 1.74 0 2.49-1.52 3.04-2.96 3.2.23.2.44.59.44 1.19v1.77c0 .17.12.37.44.31A6.502 6.502 0 0 0 14.5 8C14.5 4.41 11.59 1.5 8 1.5Z" fill="currentColor"/>
                             </svg>
@@ -113,8 +112,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-center items-start pl-[60px] max-lg:pl-0 max-lg:justify-start">
-                    <div class="panel-border relative bg-[#181c27] border border-[#252a38] rounded-2xl p-7 w-[340px] max-lg:w-full max-lg:max-w-[420px] overflow-hidden">
+                <div class="flex justify-center lg:justify-end items-start">
+                    <div class="panel-border relative bg-[#181c27] border border-[#252a38] rounded-2xl p-5 sm:p-7 w-full max-w-[420px] overflow-hidden">
                         <div class="flex items-center justify-between mb-5">
                             <span class="text-[13px] font-semibold text-[#f1f2f6] tracking-[0.01em]">Quick Access</span>
                         </div>
@@ -170,34 +169,44 @@
                 </div>
             </main>
             <div class="border-t border-[#1e2436] bg-[rgba(15,17,23,0.4)]">
-                <div class="max-w-[1200px] mx-auto px-8 grid grid-cols-4 max-sm:grid-cols-2 divide-x divide-[#1e2436] max-sm:divide-x-0">
-                    <div class="py-6 px-8 first:pl-0 last:pr-0 flex flex-col gap-1 max-sm:border-b max-sm:border-[#1e2436]">
-                        <div class="text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
-                            Laravel <span class="text-[#f97316]">v{{ app()->version() }}</span>
+                <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 border-x border-[#1e2436] lg:divide-x lg:divide-[#1e2436]">
+                        <div class="p-4 sm:p-6 border-b border-[#1e2436] lg:border-b-0">
+                            <div class="text-lg sm:text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em] break-all">
+                                Laravel <span class="text-[#f97316]">v{{ app()->version() }}</span>
+                            </div>
+                            <div class="text-xs text-[#4e5668] mt-1">
+                                Framework version
+                            </div>
                         </div>
-                        <div class="text-xs text-[#4e5668] font-normal">Framework version</div>
-                    </div>
-                    <div class="py-6 px-8 flex flex-col gap-1 max-sm:border-b max-sm:border-[#1e2436]">
-                        <div class="text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
-                            PHP <span class="text-[#f97316]">v{{ PHP_VERSION }}</span>
+                        <div class="p-4 sm:p-6 border-b border-[#1e2436] lg:border-b-0">
+                            <div class="text-lg sm:text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em] break-all">
+                                PHP <span class="text-[#f97316]">v{{ PHP_VERSION }}</span>
+                            </div>
+                            <div class="text-xs text-[#4e5668] mt-1">
+                                Runtime
+                            </div>
                         </div>
-                        <div class="text-xs text-[#4e5668] font-normal">Runtime</div>
-                    </div>
-                    <div class="py-6 px-8 flex flex-col gap-1">
-                        <div class="text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
-                            <span class="text-[#f97316]">KCID</span>
+                        <div class="p-4 sm:p-6">
+                            <div class="text-lg sm:text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
+                                <span class="text-[#f97316]">KCID</span>
+                            </div>
+                            <div class="text-xs text-[#4e5668] mt-1">
+                                Patch project
+                            </div>
                         </div>
-                        <div class="text-xs text-[#4e5668] font-normal">Patch project</div>
-                    </div>
-                    <div class="py-6 px-8 last:pr-0 flex flex-col gap-1">
-                        <div class="text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
-                            <span class="text-[#f97316]">Open</span> Source
+                        <div class="p-4 sm:p-6">
+                            <div class="text-lg sm:text-2xl font-bold text-[#f1f2f6] tracking-[-0.02em]">
+                                <span class="text-[#f97316]">Open</span> Source
+                            </div>
+                            <div class="text-xs text-[#4e5668] mt-1">
+                                Community driven
+                            </div>
                         </div>
-                        <div class="text-xs text-[#4e5668] font-normal">Community driven</div>
                     </div>
                 </div>
             </div>
-            <footer class="px-8 py-5 border-t border-[#1e2436] flex items-center justify-between relative z-[1] max-sm:flex-col max-sm:gap-2 max-sm:text-center">
+            <footer class="px-4 sm:px-6 lg:px-8 py-5 border-t border-[#1e2436] flex flex-col sm:flex-row items-center justify-between gap-2 relative z-[1] text-center sm:text-left">
                 <div class="text-xs text-[#f1f2f6]">
                     KCID Translation Management System &mdash;
                     <a href="https://github.com/laravel/framework/blob/13.x/CHANGELOG.md"
@@ -206,7 +215,7 @@
                         View Laravel Changelog
                     </a>
                 </div>
-                <div class="text-xs text-[#f1f2f6]">SLAVUSworks &copy; {{ date('Y') }}</div>
+                <div class="text-xs text-[#f1f2f6]"><a href="https://slavusworks.my.id" target="_blank" class="text-[#f97316] no-underline font-medium hover:underline">SLAVUSworks</a> &copy; {{ date('Y') }}</div>
             </footer>
         </div>
     </body>

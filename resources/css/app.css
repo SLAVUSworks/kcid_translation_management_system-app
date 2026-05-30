@@ -1,3 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --color-sidebar: #0f1117;
+    --color-sidebar-hover: #1a1d27;
+    --color-sidebar-active: #1e2130;
+    --color-sidebar-border: #1e2436;
+
+    --color-accent: #f97316;
+    --color-accent-muted: rgba(249,115,22,0.12);
+
+    --color-surface: #13161f;
+    --color-surface-card: #181c27;
+    --color-surface-border: #252a38;
+}

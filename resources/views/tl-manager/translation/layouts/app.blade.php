@@ -5,51 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - KCIDTMS-APP</title>
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/translation/app.css') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'display': ['Plus Jakarta Sans', 'sans-serif'],
-                        'body': ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        sidebar: {
-                            DEFAULT: '#0f1117',
-                            hover:   '#1a1d27',
-                            active:  '#1e2130',
-                            border:  '#1e2436',
-                        },
-                        accent: {
-                            DEFAULT: '#f97316',
-                            muted:   'rgba(249,115,22,0.12)',
-                        },
-                        surface: {
-                            DEFAULT: '#13161f',
-                            card:    '#181c27',
-                            border:  '#252a38',
-                        },
-                    },
-                    boxShadow: {
-                        'glow': '0 0 0 1px rgba(249,115,22,0.3), 0 4px 24px rgba(249,115,22,0.08)',
-                    },
-                }
-            }
-        };
-    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-
 </head>
 
 <body class="antialiased">
