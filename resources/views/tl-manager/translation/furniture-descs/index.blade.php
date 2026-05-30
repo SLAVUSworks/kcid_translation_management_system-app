@@ -161,7 +161,7 @@
                 <strong class="text-slate-400">{{ number_format($furnitureDescs->total()) }}</strong> furniture descriptions
             </span>
 
-            {{ $furnitureDescs->links() }}
+            {{ $furnitureDescs->links('vendor.pagination.tailwind') }}
         </div>
 
     </div>

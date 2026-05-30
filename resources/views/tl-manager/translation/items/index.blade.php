@@ -155,7 +155,7 @@
                 <strong class="text-slate-400">{{ number_format($items->total()) }}</strong> items
             </span>
 
-            {{ $items->links() }}
+            {{ $items->links('vendor.pagination.tailwind') }}
         </div>
 
     </div>

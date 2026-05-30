@@ -161,7 +161,7 @@
                 <strong class="text-slate-400">{{ number_format($expeditionDescs->total()) }}</strong> expedition descriptions
             </span>
 
-            {{ $expeditionDescs->links() }}
+            {{ $expeditionDescs->links('vendor.pagination.tailwind') }}
         </div>
 
     </div>

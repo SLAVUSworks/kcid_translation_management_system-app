@@ -1,96 +1,225 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('User Management') }}
-        </h2>
-    </x-slot>
+@extends('tl-manager.layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <!-- Search Form -->
-                    <div class="mb-6">
-                        <form method="GET" action="{{ route('users.index') }}" class="flex gap-4">
-                            <input
-                                type="text"
-                                name="search"
-                                placeholder="Search by name or email..."
-                                value="{{ $search }}"
-                                class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-200"
-                            />
-                            <button
-                                type="submit"
-                                class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-                            >
-                                Search
-                            </button>
-                        </form>
-                    </div>
+@section('title', 'User Management')
 
-                    <!-- Success Message -->
-                    @if (session('success'))
-                        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg dark:bg-green-900 dark:text-green-300">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+@section('content')
 
-                    <!-- Users Table -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600">
-                                <tr>
-                                    <th class="px-4 py-3">Name</th>
-                                    <th class="px-4 py-3">Email</th>
-                                    <th class="px-4 py-3">Current Role</th>
-                                    <th class="px-4 py-3">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-4 py-3">{{ $user->name }}</td>
-                                        <td class="px-4 py-3">{{ $user->email }}</td>
-                                        <td class="px-4 py-3">
-                                            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold
-                                                @if ($user->role === 'admin')
-                                                    bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
-                                                @elseif ($user->role === 'verified')
-                                                    bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
-                                                @else
-                                                    bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
-                                                @endif
-                                            ">
-                                                {{ ucfirst($user->role) }}
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <form method="POST" action="{{ route('users.updateRole', $user) }}" class="inline-flex gap-2">
-                                                @csrf
-                                                @method('PATCH')
-                                                <select
-                                                    name="role"
-                                                    class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700 dark:text-gray-200 text-sm"
-                                                    onchange="this.form.submit()"
-                                                >
-                                                    <option value="unverified" @if ($user->role === 'unverified') selected @endif>Unverified</option>
-                                                    <option value="verified" @if ($user->role === 'verified') selected @endif>Verified</option>
-                                                    <option value="admin" @if ($user->role === 'admin') selected @endif>Admin</option>
-                                                </select>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="mt-6">
-                        {{ $users->links() }}
-                    </div>
+<div class="space-y-6">
+    <div
+        class="relative overflow-hidden rounded-xl border border-surface-border bg-surface-card p-8 shadow-glow">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.15),transparent_35%)]">
+        </div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div>
+                <p class="text-accent text-sm font-semibold tracking-widest uppercase">
+                    KanColle Patch Indonesia
+                </p>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mt-2">
+                    Account Management
+                </h1>
+                <p class="text-gray-400 mt-3 max-w-2xl">
+                    Manage user accounts, roles, and permissions.
+                </p>
+            </div>
+            <div
+                class="flex items-center gap-4 bg-sidebar-active border border-sidebar-border rounded-xl px-5 py-4">
+                <div
+                    class="w-14 h-14 rounded-xl bg-accent-muted flex items-center justify-center text-accent text-2xl">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-400">
+                        Active Users
+                    </p>
+                    <h2 class="text-3xl font-bold text-white">
+                        {{ count($users) }}
+                    </h2>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+@if (session('success'))
+
+    <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-emerald-300">
+        {{ session('success') }}
+    </div>
+
+@endif
+
+<div class="rounded-2xl border border-white/5 bg-[#181c27] overflow-hidden">
+
+    <div class="p-6 border-b border-white/5">
+
+        <form method="GET"
+            action="{{ route('users.index') }}"
+            class="flex flex-col md:flex-row gap-3">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ $search }}"
+                placeholder="Search by name or email..."
+                class="flex-1 rounded-xl border border-white/10 bg-[#13161f] px-4 py-3 text-white placeholder:text-gray-500 focus:border-orange-500/40 focus:ring focus:ring-orange-500/10">
+
+            <button
+                type="submit"
+                class="rounded-xl bg-orange-500 hover:bg-orange-600 px-5 py-3 text-sm font-medium text-white transition">
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+            <thead>
+
+                <tr class="border-b border-white/5 bg-[#13161f]">
+
+                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.12em] text-gray-400">
+                        User
+                    </th>
+
+                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.12em] text-gray-400">
+                        Email
+                    </th>
+
+                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.12em] text-gray-400">
+                        Role
+                    </th>
+
+                    <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.12em] text-gray-400">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @forelse ($users as $user)
+
+                    <tr class="border-b border-white/5 hover:bg-white/[0.02] transition">
+
+                        <td class="px-6 py-4">
+
+                            <div class="flex items-center gap-3">
+
+                                @if($user->profile_photo)
+
+                                    <img
+                                        src="{{ asset('storage/' . $user->profile_photo) }}"
+                                        class="w-10 h-10 rounded-xl object-cover border border-white/10">
+
+                                @else
+
+                                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-sm font-bold text-orange-300">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </div>
+
+                                @endif
+
+                                <span class="font-medium text-white">
+                                    {{ $user->name }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+                        <td class="px-6 py-4 text-gray-300">
+                            {{ $user->email }}
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <span
+                                class="inline-flex items-center rounded-xl px-3 py-1 text-xs font-medium border
+
+                                @if ($user->role === 'admin')
+                                    border-red-500/20 bg-red-500/10 text-red-300
+                                @elseif ($user->role === 'verified')
+                                    border-emerald-500/20 bg-emerald-500/10 text-emerald-300
+                                @else
+                                    border-yellow-500/20 bg-yellow-500/10 text-yellow-300
+                                @endif">
+
+                                {{ ucfirst($user->role) }}
+
+                            </span>
+
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <form
+                                method="POST"
+                                action="{{ route('users.updateRole', $user) }}">
+
+                                @csrf
+                                @method('PATCH')
+
+                                <select
+                                    name="role"
+                                    onchange="this.form.submit()"
+                                    class="rounded-xl border border-white/10 bg-[#13161f] px-3 py-2 text-sm text-white focus:border-orange-500/40 focus:ring focus:ring-orange-500/10">
+
+                                    <option value="unverified" @selected($user->role === 'unverified')>
+                                        Unverified
+                                    </option>
+
+                                    <option value="verified" @selected($user->role === 'verified')>
+                                        Verified
+                                    </option>
+
+                                    <option value="admin" @selected($user->role === 'admin')>
+                                        Admin
+                                    </option>
+
+                                </select>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="4"
+                            class="px-6 py-10 text-center text-gray-500">
+
+                            No users found.
+
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div>
+
+    {{ $users->links() }}
+
+</div>
+</div>
+
+@endsection

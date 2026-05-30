@@ -1,38 +1,142 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('tl-manager.layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="text-center py-12">
-                        <div class="mb-6">
-                            <svg class="mx-auto h-12 w-12 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4v2m0-10.5v.5m0 7v.5M9 3h6m0 0a9 9 0 110 18H9a9 9 0 010-18zm0 0V3m0 18v-6m0-10v.5m0 7v.5" />
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Account Verification Pending</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            Your account is currently unverified. To access the full translation system, an administrator needs to verify your account.
-                        </p>
-                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
-                            <p class="text-yellow-800 dark:text-yellow-200 text-sm">
-                                <strong>What you can do:</strong>
-                            </p>
-                            <ul class="text-yellow-700 dark:text-yellow-300 text-sm mt-2 space-y-1 text-left">
-                                <li>✓ Edit your profile information</li>
-                                <li>✓ Change your password</li>
-                                <li>✗ Access translation modules</li>
-                                <li>✗ View translation data</li>
-                            </ul>
-                        </div>
-                    </div>
+@section('title', 'Restricted Access')
+
+@section('content')
+
+<div class="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+
+<div class="w-full max-w-2xl">
+
+    <div class="rounded-2xl border border-yellow-500/20 bg-[#181c27] shadow-[0_0_40px_rgba(249,115,22,0.08)] overflow-hidden">
+
+        <div class="border-b border-yellow-500/10 px-6 py-5">
+
+            <div class="flex items-center gap-4">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
+
+                    <svg class="h-7 w-7 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" />
+                    </svg>
+
                 </div>
+
+                <div>
+
+                    <h1 class="text-2xl font-bold text-white">
+                        Account Verification Pending
+                    </h1>
+
+                    <p class="text-sm text-gray-400 mt-1">
+                        Your account is currently waiting for administrator approval.
+                    </p>
+
+                </div>
+
             </div>
+
         </div>
+
+        <div class="p-6 space-y-6">
+
+            <div class="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-4">
+
+                <p class="text-sm leading-relaxed text-yellow-100/90">
+                    Your account has been successfully created, but you still have
+                    <span class="font-semibold text-yellow-300">
+                        Unverified
+                    </span>
+                    status. Please wait until an administrator grants access to the translation system.
+                </p>
+
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-emerald-400 mb-3">
+                        Available
+                    </p>
+
+                    <ul class="space-y-2 text-sm text-emerald-200">
+
+                        <li class="flex items-center gap-2">
+                            <span>✓</span>
+                            <span>Edit profile information</span>
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span>✓</span>
+                            <span>Change password</span>
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span>✓</span>
+                            <span>Access account settings</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-red-400 mb-3">
+                        Restricted
+                    </p>
+
+                    <ul class="space-y-2 text-sm text-red-200">
+
+                        <li class="flex items-center gap-2">
+                            <span>✗</span>
+                            <span>Translation modules</span>
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span>✗</span>
+                            <span>Translation management</span>
+                        </li>
+
+                        <li class="flex items-center gap-2">
+                            <span>✗</span>
+                            <span>Translation data access</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="flex items-center justify-between flex-wrap gap-4 pt-2">
+
+                <div>
+                    <p class="text-sm text-gray-400">
+                        Logged in as:
+                    </p>
+
+                    <p class="font-semibold text-white">
+                        {{ auth()->user()->name }}
+                    </p>
+                </div>
+
+                <a href="{{ route('profile.edit') }}"
+                    class="inline-flex items-center gap-2 rounded-xl border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 px-5 py-3 text-sm font-medium text-orange-300 transition">
+
+                    Edit Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
-</x-app-layout>
+
+</div>
+</div>
+
+@endsection

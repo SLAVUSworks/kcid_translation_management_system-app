@@ -149,12 +149,15 @@
         </table>
 
         <div class="flex items-center justify-between px-[1.1rem] py-[0.85rem] border-t border-[#1e2436] bg-[#0f1117] flex-wrap gap-3">
+
             <span class="text-[0.75rem] text-slate-500">
                 Showing {{ $quests->firstItem() }}–{{ $quests->lastItem() }} of
-                <strong class="text-slate-400">{{ number_format($quests->total()) }}</strong> quests
+                <strong class="text-slate-400">{{ number_format($quests->total()) }}</strong>
+                quests
             </span>
 
-            {{ $quests->links() }}
+            {{ $quests->links('vendor.pagination.tailwind') }}
+
         </div>
 
     </div>
