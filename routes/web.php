@@ -1,18 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\translation\QuestController;
-use App\Http\Controllers\translation\FurnitureDescController;
-use App\Http\Controllers\translation\ExpeditionDescController;
-use App\Http\Controllers\translation\ItemController;
+use App\Http\Controllers\DashboardRedirectController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\translation\DashboardController as TranslationDashboardController;
+use App\Http\Controllers\translation\ExpeditionDescController;
+use App\Http\Controllers\translation\FurnitureDescController;
+use App\Http\Controllers\translation\ItemController;
+use App\Http\Controllers\translation\QuestController;
+use App\Http\Controllers\UserManagementController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->group(function () {
+Route::get('/dashboard', DashboardRedirectController::class)
+    ->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 
@@ -20,7 +32,7 @@ Route::prefix('admin')->group(function () {
         ->name('admin.modules');
 
     Route::resource('quests', QuestController::class);
-    
+
     Route::get('quests/export/json', [QuestController::class, 'export'])->name('quests.export');
     Route::get('quests/import/form', [QuestController::class, 'showImport'])->name('quests.import.form');
     Route::post('quests/import/process', [QuestController::class, 'import'])->name('quests.import');
@@ -41,9 +53,16 @@ Route::prefix('admin')->group(function () {
     Route::post('expedition-descs/batch-delete', [ExpeditionDescController::class, 'batchDelete'])->name('expedition-descs.batch-delete');
 
     Route::resource('items', ItemController::class);
-    
+
     Route::get('items/export/json', [ItemController::class, 'export'])->name('items.export');
     Route::get('items/import/form', [ItemController::class, 'showImport'])->name('items.import.form');
     Route::post('items/import/process', [ItemController::class, 'import'])->name('items.import');
     Route::post('items/batch-delete', [ItemController::class, 'batchDelete'])->name('items.batch-delete');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('users', [UserManagementController::class, 'index'])->name('users.index');
+        Route::patch('users/{user}/role', [UserManagementController::class, 'updateRole'])->name('users.updateRole');
+    });
 });
+
+require __DIR__.'/auth.php';
